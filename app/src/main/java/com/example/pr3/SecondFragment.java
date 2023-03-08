@@ -10,32 +10,46 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+import com.example.pr3.FirstFragment;
+
 
 public class SecondFragment extends Fragment {
 
-    public SecondFragment() {
-        super(R.layout.fragment_second);
-    }
+    private EditText editText;
+    private Button button2;
+    private MainActivity mainActivity;
+    //public SecondFragment() {
+    //}
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ToastShow("OnCreate");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        editText = view.findViewById(R.id.editTextNumber);
+        button2 = view.findViewById(R.id.button2);
+        mainActivity = (MainActivity) getActivity();
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = editText.getText().toString();
+                mainActivity.setText(text);
+            }
+        });
+        Bundle args = getArguments();
+        if (args != null) {
+            String text = args.getString("text");
+            editText.setText(text);
+        }
+        return view;
+    }
 
-    }
-    @Override
-    @Nullable
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        ToastShow("FragTwo onCreateView");
-        Log.i("FragTwo", "onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         ToastShow("FragTwo onViewCreated");
         Log.i("FragTwo", "onViewCreated");
-
     }
 
     @Override
